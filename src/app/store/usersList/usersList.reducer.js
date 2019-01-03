@@ -1,23 +1,21 @@
 import { handleActions } from 'redux-actions';
 import { UsersListActionType } from './usersList.actions';
+import { getLocalStorage, setLocalStorage } from '../../utils';
 
-const initialState = [
-  {
-    email: 'default@wink.by',
-    password: 'password'
-  }
-];
+const initialState = getLocalStorage('usersList') || [];
 
-export const AddUserReducer = (state, action) => {
+export const InsertUserReducer = (state, action) => {
   if (action.payload) {
-    return [...state, action.payload.user];
+    let newList = [...state, action.payload.user]
+    setLocalStorage('usersList', newList);
+    return newList;
   }
   return state
 }
 
 export const usersListReducer = handleActions(
   {
-    [UsersListActionType.ADD_USER]: AddUserReducer,
+    [UsersListActionType.INSERT_USER]: InsertUserReducer,
   },
   initialState
 );

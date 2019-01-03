@@ -1,9 +1,11 @@
 import { createAction } from "redux-actions";
 
 export const UsersListActionType = {
-  ADD_USER: 'ADD_USER'
+  REGISTER_USER: 'REGISTER_USER',
+  INSERT_USER: 'INSERT_USER'
 };
 
 export const UsersListAction = {
-  addUser: createAction(UsersListActionType.ADD_USER)
+  addUser: createAction(UsersListActionType.REGISTER_USER),
+  insertUser: createAction(UsersListActionType.INSERT_USER)
 }
