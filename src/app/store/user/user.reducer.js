@@ -4,7 +4,7 @@ import { setLocalStorage, getLocalStorage, deleteLocalStorage } from '../../util
 
 const initialState = getLocalStorage('loggedUser') || {};
 
-export const LoginUserReducer = (state, action) => {
+export const SaveUserReducer = (state, action) => {
   if (action.payload) {
     setLocalStorage('loggedUser', action.payload);
     return {
@@ -27,7 +27,7 @@ export const LogoutUserReducer = (state, action) => {
 
 export const userReducer = handleActions(
   {
-    [UserActionType.LOGIN_USER]: LoginUserReducer,
+    [UserActionType.SAVE_USER]: SaveUserReducer,
     [UserActionType.LOGOUT_USER]: LogoutUserReducer,
   },
   initialState
