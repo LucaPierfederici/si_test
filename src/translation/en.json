@@ -1,0 +1,17 @@
+{
+  "shared.exit": "Exit",
+  "shared.email": "Email",
+  "shared.password": "Password",
+  "shared.invalid_email": "Invalid email",
+  "shared.email_used": "Email already used",
+  "shared.password_len": "Password, min {minLength} characters",
+  "shared.wrong_password": "Wrong password",
+  "shared.email_pass_missing": "Insert email and password",
+  "shared.email_pass_wrong": "Wrong email or password",
+  "form.login": "Login",
+  "form.register": "Register",
+  "form.title": "{type} User",
+  "form.title.login": "Login",
+  "form.title.register": "Registration",
+  "dashboard.welcome": "Welcome {user}"
+}
