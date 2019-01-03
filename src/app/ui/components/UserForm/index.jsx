@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { UsersListAction } from '../../../store/usersList/usersList.actions';
 import capitalize from 'lodash/capitalize';
 import { Button } from '../../components/elements/Button';
+import { Input } from '../../components/elements/Input';
 
 class UserForm extends React.Component {
 
@@ -35,11 +36,11 @@ class UserForm extends React.Component {
         <form >
           <div>
             <label>Email</label>
-            <input placeholder="email" onChange={e => this.setState({ email: e.target.value })} />
+            <Input placeholder="email" onChange={e => this.setState({ email: e.target.value })} />
           </div>
           <div>
             <label>Password</label>
-            <input placeholder="password" onChange={e => this.setState({ password: e.target.value })} type="password" />
+            <Input placeholder="password" onChange={e => this.setState({ password: e.target.value })} type="password" />
           </div>
           <Button type="submit" onClick={this.onClick.bind(this)}>{this.props.type.toUpperCase()}</Button>
         </form>
