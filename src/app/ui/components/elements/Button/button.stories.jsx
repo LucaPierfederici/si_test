@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
+import '../../../../../assets/index.css';
 import { Button } from './index';
 
 const stories = storiesOf('Button', module);
@@ -9,8 +10,12 @@ stories.add(
   () => <Button>Cliccami</Button>
 );
 
-
 stories.add(
   'Custom color',
   () => <Button color="#03f4af">Cliccami</Button>
+);
+
+stories.add(
+  'Float',
+  () => <Button color="#03f4af" right>Cliccami</Button>
 );
