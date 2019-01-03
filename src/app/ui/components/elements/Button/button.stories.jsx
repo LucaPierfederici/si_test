@@ -17,5 +17,10 @@ stories.add(
 
 stories.add(
   'Float',
-  () => <Button color="#03f4af" right>Cliccami</Button>
+  () => <Button right>Cliccami</Button>
+);
+
+stories.add(
+  'Uppercase',
+  () => <Button uppercase>Cliccami</Button>
 );
