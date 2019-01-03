@@ -5,6 +5,6 @@ import { Card } from './index';
 const stories = storiesOf('Card', module);
 
 stories.add(
-  'normal',
+  'Normal',
   () => <Card><p>poewjfpoewjf</p></Card>
 );

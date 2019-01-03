@@ -5,12 +5,12 @@ import { Button } from './index';
 const stories = storiesOf('Button', module);
 
 stories.add(
-  'normal',
-  () => <Button><p>poewjfpoewjf</p></Button>
+  'Normal',
+  () => <Button>Cliccami</Button>
 );
 
 
 stories.add(
-  'custom color',
-  () => <Button color="#ff0000"><p>poewjfpoewjf</p></Button>
+  'Custom color',
+  () => <Button color="#03f4af">Cliccami</Button>
 );
