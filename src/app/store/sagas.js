@@ -1,10 +1,12 @@
 import { fork, all } from 'redux-saga/effects';
 import userSagas from './user/user.sagas';
+import usersListSagas from './usersList/usersList.sagas';
 
 // add here all your watchers
 
 const sagas = [
-  userSagas
+  userSagas,
+  usersListSagas
 ]
 
 // Register all your watchers
