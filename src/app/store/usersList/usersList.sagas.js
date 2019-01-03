@@ -7,35 +7,36 @@ import { UserAction } from '../user/user.actions';
 import pickBy from 'lodash/pickBy';
 
 export function* addUser(action) {
+  const minLength = 8;
 
   action.payload.password = action.payload.password.trim()
   action.payload = pickBy(action.payload);
 
-  yield put(UserFormAction.setErrorMessage(''))
+  yield put(UserFormAction.setErrorMessage({text: ''}))
 
   if (!action.payload || Object.keys(action.payload).length === 0) {
-    yield put(UserFormAction.setErrorMessage('Insert email and password'))
+    yield put(UserFormAction.setErrorMessage({text: 'shared.email_pass_missing'}))
     return
   }
 
   if (!action.payload.email.includes('@')) {
-    yield put(UserFormAction.setErrorMessage('invalid email'))
+    yield put(UserFormAction.setErrorMessage({text: 'shared.invalid_email'}))
     return
   }
 
-  if (!action.payload.password || action.payload.password.length < 8) {
-    yield put(UserFormAction.setErrorMessage('Password must be at least 8 characters long'))
+  if (!action.payload.password || action.payload.password.length < minLength) {
+    yield put(UserFormAction.setErrorMessage({text: 'shared.password_len', params: {minLength}}))
     return
   }
 
   let users = yield select(getRegisteredUsers);
 
   if (users.find(t => t.email === action.payload.email)) {
-    yield put(UserFormAction.setErrorMessage('Email already used'));
+    yield put(UserFormAction.setErrorMessage({text: 'shared.email_used'}));
     return
   }
 
-  yield put(UsersListAction.insertUser({user: action.payload}))
+  yield put(UsersListAction.insertUser({ user: action.payload }))
   yield put(UserAction.loginUser(action.payload))
 
 }

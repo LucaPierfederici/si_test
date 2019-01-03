@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { UsersListAction } from '../../../store/usersList/usersList.actions';
 import capitalize from 'lodash/capitalize';
 import { Button, Input, ErrorMessage, Link } from '../../components/elements';
+import { injectIntl } from 'react-intl'
 
 class UserForm extends React.Component {
 
@@ -27,23 +28,24 @@ class UserForm extends React.Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, intl, type, errorMessage, errorParams } = this.props;
     return user && (
       <div>
-        <h2>{capitalize(this.props.type)} user</h2>
+        <h2>{intl.formatMessage({ id: 'form.title' }, { type: intl.formatMessage({ id: `form.title.${type}` }) })} </h2>
         <form>
           <div>
-            <label>Email</label>
-            <Input placeholder="email" onChange={e => this.setState({ email: e.target.value })} />
+            <label>{intl.formatMessage({ id: 'shared.email' })}</label>
+            <Input placeholder={intl.formatMessage({ id: 'shared.email' })} onChange={e => this.setState({ email: e.target.value })} />
           </div>
           <div>
-            <label>Password</label>
-            <Input placeholder="password" onChange={e => this.setState({ password: e.target.value })} type="password" />
+            <label>{intl.formatMessage({ id: 'shared.password' })}</label>
+            <Input placeholder={intl.formatMessage({ id: 'shared.password' })}
+              onChange={e => this.setState({ password: e.target.value })} type="password" />
           </div>
-          {this.props.errorMessage && (<ErrorMessage>{this.props.errorMessage}</ErrorMessage>)}
-          <Button type="submit" onClick={this.onClick.bind(this)}>{this.props.type.toUpperCase()}</Button>
+          {errorMessage.text && (<ErrorMessage>{intl.formatMessage({id: `${errorMessage.text}`}, errorParams)}</ErrorMessage>)}
+          <Button type="submit" onClick={this.onClick.bind(this)} uppercase>{intl.formatMessage({ id: `form.${type}` })}</Button>
         </form>
-        {this.props.type == "login" && (<div><hr /> <Link to="/register">Register</Link></div>)}
+        {type === "login" && (<div><hr /> <Link to="/register">{intl.formatMessage({ id: 'form.register' })}</Link></div>)}
       </div>
     )
   }
@@ -52,7 +54,8 @@ class UserForm extends React.Component {
 export default connect(
   (state) => ({
     user: state.user,
-    errorMessage: state.components.userForm.errorMessage
+    errorMessage: state.components.userForm.errorMessage,
+    errorParams: state.components.userForm.errorMessage.params || {}
   }),
   (dispatch) => {
     return ({
@@ -60,13 +63,14 @@ export default connect(
       login: bindActionCreators(UserAction, dispatch).loginUser,
     })
   }
-)(UserForm)
+)(injectIntl(UserForm))
 
 UserForm.propTypes = {
   email: PropTypes.string,
   password: PropTypes.string,
   user: PropTypes.any,
   saveUser: PropTypes.func,
-  errorMessage: PropTypes.string,
+  errorMessage: PropTypes.object,
+  errorParams: PropTypes.object,
   type: PropTypes.string.isRequired
 }

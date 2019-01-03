@@ -2,7 +2,7 @@ import { handleActions } from 'redux-actions'
 import { UserFormActionType } from './UserForm.actions';
 
 const initialState = {
-  errorMessage: ''
+  errorMessage: {}
 };
 
 export const UserFormReducer = handleActions(
