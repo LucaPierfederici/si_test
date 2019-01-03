@@ -1,0 +1,32 @@
+:root {
+  --primary-color: #00b88d;
+  --primary-text-color: #495057;
+  --primary-error-color: #dc3545;
+  --font-family: 'Montserrat'
+}
+
+@font-face {
+  font-family: 'Staatliches';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/Staatliches-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/Montserrat-Regular.ttf') format('truetype');
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family), sans-serif;
+  color: var(--primary-text-color)
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
