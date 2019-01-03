@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import Dashboard from './ui/containers/Dashboard';
 import { Login } from './ui/containers/Login';
 import { Register } from './ui/containers/Register';
+import LocaleProvider from './LocaleProvider';
 
 // prepare store
 const history = createBrowserHistory();
@@ -30,7 +31,7 @@ export class App extends React.Component {
 
   render() {
     const unsubscribe = store.subscribe(() => {
-      if (this.state.logged != this.isLogged())
+      if (this.state.logged !== this.isLogged())
         this.setState({ logged: this.isLogged() })
     })
     const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -59,9 +60,11 @@ export class App extends React.Component {
       <Provider store={store}>
         <Router history={history}>
           <Switch>
-            <PrivateRoute path="/" exact component={Dashboard} />
-            <LogRedirectRoute path="/login" component={Login} />
-            <LogRedirectRoute path="/register" component={Register} />
+            <LocaleProvider>
+              <PrivateRoute path="/" exact component={Dashboard} />
+              <LogRedirectRoute path="/login" component={Login} />
+              <LogRedirectRoute path="/register" component={Register} />
+            </LocaleProvider>
           </Switch>
         </Router>
       </Provider>
