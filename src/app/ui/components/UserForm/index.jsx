@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { UserAction } from '../../../store/user/user.actions';
 import PropTypes from 'prop-types';
+import { UsersListAction } from '../../../store/usersList/usersList.actions';
+import capitalize from 'lodash/capitalize';
+import { Button } from '../../components/elements/Button';
 
+class UserForm extends React.Component {
 
-class UserForm extends React.Component{
-
-  constructor (prop){
+  constructor(prop) {
     super(prop)
 
     this.state = {
@@ -16,8 +18,9 @@ class UserForm extends React.Component{
     };
   }
 
-  onSave () {
-    this.props.saveUser && this.props.saveUser({
+  onClick(e) {
+    e.preventDefault();
+    this.props[this.props.type] && this.props[this.props.type]({
       email: this.state.email,
       password: this.state.password
     })
@@ -27,19 +30,19 @@ class UserForm extends React.Component{
     const { user } = this.props;
     return user && (
       <div>
-        <h3>Login user</h3>
+        <h3>{capitalize(this.props.type)} user</h3>
         {this.props.errorMessage && (<label>{this.props.errorMessage}</label>)}
-        <div >
+        <form >
           <div>
             <label>Email</label>
-            <input placeholder="email" onChange={e => this.setState({ email: e.target.value}) }/>
+            <input placeholder="email" onChange={e => this.setState({ email: e.target.value })} />
           </div>
           <div>
             <label>Password</label>
-            <input placeholder="password" onChange={e => this.setState({ password: e.target.value}) } type="password"/>
+            <input placeholder="password" onChange={e => this.setState({ password: e.target.value })} type="password" />
           </div>
-        </div>
-        <button onClick={this.onSave.bind(this)}>Save</button>
+          <Button type="submit" onClick={this.onClick.bind(this)}>{this.props.type.toUpperCase()}</Button>
+        </form>
       </div>
     )
   }
@@ -50,9 +53,12 @@ export default connect(
     user: state.user,
     errorMessage: state.components.userForm.errorMessage
   }),
-  (dispatch) => ({
-    saveUser: bindActionCreators(UserAction, dispatch).saveUser
-  })
+  (dispatch) => {
+    return ({
+      register: bindActionCreators(UsersListAction, dispatch).addUser,
+      login: bindActionCreators(UserAction, dispatch).loginUser,
+    })
+  }
 )(UserForm)
 
 UserForm.propTypes = {
@@ -60,5 +66,6 @@ UserForm.propTypes = {
   password: PropTypes.string,
   user: PropTypes.any,
   saveUser: PropTypes.func,
-  errorMessage: PropTypes.string
+  errorMessage: PropTypes.string,
+  type: PropTypes.string.isRequired
 }
