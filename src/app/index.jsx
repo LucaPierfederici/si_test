@@ -29,7 +29,10 @@ export class App extends React.Component {
   }
 
   render() {
-    const unsubscribe = store.subscribe(() => this.setState({ logged: this.isLogged() }))
+    const unsubscribe = store.subscribe(() => {
+      if (this.state.logged != this.isLogged())
+        this.setState({ logged: this.isLogged() })
+    })
     const PrivateRoute = ({ component: Component, ...rest }) => (
       <Route {...rest} render={props => (
         this.state.logged ? (
