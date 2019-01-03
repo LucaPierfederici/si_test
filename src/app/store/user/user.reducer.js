@@ -1,17 +1,25 @@
 import { handleActions } from 'redux-actions';
 import { UserActionType } from './user.actions';
+import { setLocalStorage, getLocalStorage, deleteLocalStorage } from '../../utils';
 
-const initialState = {
-    email: 'default@wink.by',
-    password: 'password'
-};
+const initialState = getLocalStorage('loggedUser') || {};
 
 export const LoginUserReducer = (state, action) => {
   if (action.payload) {
+    setLocalStorage('loggedUser', action.payload);
     return {
       ...state,
       email: action.payload.email,
-      name: action.payload.password
+      password: action.payload.password
+    };
+  }
+  return state
+}
+export const LogoutUserReducer = (state, action) => {
+  if (action.payload) {
+    deleteLocalStorage('loggedUser');
+    return {
+      
     };
   }
   return state
@@ -20,6 +28,7 @@ export const LoginUserReducer = (state, action) => {
 export const userReducer = handleActions(
   {
     [UserActionType.LOGIN_USER]: LoginUserReducer,
+    [UserActionType.LOGOUT_USER]: LogoutUserReducer,
   },
   initialState
 );
