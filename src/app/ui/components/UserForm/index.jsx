@@ -5,8 +5,7 @@ import { UserAction } from '../../../store/user/user.actions';
 import PropTypes from 'prop-types';
 import { UsersListAction } from '../../../store/usersList/usersList.actions';
 import capitalize from 'lodash/capitalize';
-import { Button } from '../../components/elements/Button';
-import { Input } from '../../components/elements/Input';
+import { Button, Input, ErrorMessage, Link } from '../../components/elements';
 
 class UserForm extends React.Component {
 
@@ -31,9 +30,8 @@ class UserForm extends React.Component {
     const { user } = this.props;
     return user && (
       <div>
-        <h3>{capitalize(this.props.type)} user</h3>
-        {this.props.errorMessage && (<label>{this.props.errorMessage}</label>)}
-        <form >
+        <h2>{capitalize(this.props.type)} user</h2>
+        <form>
           <div>
             <label>Email</label>
             <Input placeholder="email" onChange={e => this.setState({ email: e.target.value })} />
@@ -42,8 +40,10 @@ class UserForm extends React.Component {
             <label>Password</label>
             <Input placeholder="password" onChange={e => this.setState({ password: e.target.value })} type="password" />
           </div>
+          {this.props.errorMessage && (<ErrorMessage>{this.props.errorMessage}</ErrorMessage>)}
           <Button type="submit" onClick={this.onClick.bind(this)}>{this.props.type.toUpperCase()}</Button>
         </form>
+        {this.props.type == "login" && (<div><hr /> <Link to="/register">Register</Link></div>)}
       </div>
     )
   }
