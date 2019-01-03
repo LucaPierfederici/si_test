@@ -33,7 +33,7 @@ export function* loginUser(action) {
     return
   }
 
-  yield put(UserAction.saveUser({user: action.payload}));
+  yield put(UserAction.saveUser(action.payload));
 
 }
 
